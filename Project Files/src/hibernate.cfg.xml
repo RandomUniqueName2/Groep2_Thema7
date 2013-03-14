@@ -5,12 +5,20 @@
      <session-factory>
 
          <!-- Database connection settings -->
-         <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>	
-	 <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+         <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+         <property name="connection.url"></property>
+         <property name="connection.username"></property>
+         <property name="connection.password"></property>
+		
+	 	 <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
 	 	 
          <!-- Echo all executed SQL to stdout -->
          <property name="show_sql">true</property>
-
+         
+         
+         <mapping class="entities.User" />
+         <mapping class="entities.Address" />
+         <mapping class="entities.Car" />
      </session-factory>
 
-</hibernate-configuration>
+</hibernate-configuration>    
