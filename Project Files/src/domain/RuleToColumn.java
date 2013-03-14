@@ -1,13 +1,21 @@
 package domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import data.Column;
+
+@Entity
 public class RuleToColumn {
-	private data.Column column;
+	private int id;
+	private Column column;
+	private BusinessRule rule;
 	private String type;
 
 	// constructors
-	public RuleToColumn() {
-
-	}
+	public RuleToColumn() { }
 
 	public RuleToColumn(data.Column column, String type) {
 		this.column = column;
@@ -15,6 +23,26 @@ public class RuleToColumn {
 	}
 
 	// getters and setters
+	@Id
+	@GeneratedValue
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@OneToOne
+	public BusinessRule getRule() {
+		return rule;
+	}
+
+	public void setRule(BusinessRule rule) {
+		this.rule = rule;
+	}
+
+	@OneToOne
 	public data.Column getColumn() {
 		return column;
 	}

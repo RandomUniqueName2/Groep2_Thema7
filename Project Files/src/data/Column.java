@@ -1,13 +1,18 @@
 package data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Column {
+	private int id;
 	private String name;
 	private Table table;
 
 	// constructors
-	public Column() {
-
-	}
+	public Column() {}
 
 	public Column(String name, Table table) {
 		this.name = name;
@@ -15,6 +20,16 @@ public class Column {
 	}
 
 	// getters and setters
+	@Id
+    @GeneratedValue
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -23,6 +38,7 @@ public class Column {
 		this.name = name;
 	}
 
+	@OneToOne
 	public Table getTable() {
 		return table;
 	}

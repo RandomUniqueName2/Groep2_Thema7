@@ -1,13 +1,18 @@
 package domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
 public class BusinessRuleType {
+	private int id;
 	private String name, code, description;
 	private Category category;
 
 	// constructors
-	public BusinessRuleType() {
-
-	}
+	public BusinessRuleType() { }
 
 	public BusinessRuleType(String name, String code, String description,
 			Category category) {
@@ -18,6 +23,16 @@ public class BusinessRuleType {
 	}
 
 	// getters and setters
+	@Id
+	@GeneratedValue
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -42,6 +57,7 @@ public class BusinessRuleType {
 		this.description = description;
 	}
 
+	@OneToOne
 	public Category getCategory() {
 		return category;
 	}
