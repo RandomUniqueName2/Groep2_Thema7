@@ -2,19 +2,16 @@ package gui;
 
 import java.awt.Dimension;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JMenuItem;
-import javax.swing.JToolBar;
-import javax.swing.JButton;
-import javax.swing.JPanel;
 
 
 
 @SuppressWarnings("serial")
 public class GeneratorMainFrame extends JFrame {
-	private GeneratorMenuBar mb = null;
 	private GeneratorMenuBar topMenuBar;
 	private final JTable table = new JTable();
 	
