@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-import domain.BusinessRule;
-import domain.RuleToTable;
+import domain.BRGBusinessRule;
+import domain.BRGRuleToTable;
 
 public class BusinessRuleTableModel implements TableModel {
-	ArrayList<BusinessRule> data;
+	ArrayList<BRGBusinessRule> data;
 	ArrayList<TableModelListener> listeners;
 	
-	public BusinessRuleTableModel(ArrayList<BusinessRule> data)
+	public BusinessRuleTableModel(ArrayList<BRGBusinessRule> data)
 	{
 		this.data = data;
 	}
@@ -38,7 +38,7 @@ public class BusinessRuleTableModel implements TableModel {
 				return data.get(r).getBusinessRuleType().getName();
 			case 2:
 				StringBuilder tableNames = new StringBuilder();
-				for (RuleToTable rtt : data.get(r).getRuleToTable()) {
+				for (BRGRuleToTable rtt : data.get(r).getRuleToTable()) {
 					if (r == 0) {
 						tableNames.append(rtt.getTable().getName());
 					} else {

@@ -1,20 +1,23 @@
 package data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Database {
+@Table(name="BRG_Database")
+public class BRGDatabase {
 	private int id;
 
 
 	private String connectionString, databaseProvider;
 
 	// constructors
-	public Database() {	}
+	public BRGDatabase() {	}
 
-	public Database(String connectionString, String databaseProvider) {
+	public BRGDatabase(String connectionString, String databaseProvider) {
 		this.connectionString = connectionString;
 		this.databaseProvider = databaseProvider;
 	}
@@ -30,6 +33,7 @@ public class Database {
 		this.id = id;
 	}
 	
+	@Column(nullable = false)
 	public String getConnectionString() {
 		return connectionString;
 	}
@@ -38,6 +42,7 @@ public class Database {
 		this.connectionString = connectionString;
 	}
 
+	@Column(nullable = false)
 	public String getDatabaseProvider() {
 		return databaseProvider;
 	}

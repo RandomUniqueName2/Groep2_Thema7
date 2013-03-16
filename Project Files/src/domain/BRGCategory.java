@@ -1,27 +1,29 @@
-package data;
+package domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
-public class Table {
+@Table(name="BRG_Category")
+public class BRGCategory {
 	private int id;
 	private String name;
-	private View view;
 
 	// constructors
-	public Table() {}
+	public BRGCategory() {
 
-	public Table(String name, View view) {
+	}
+
+	public BRGCategory(String name) {
 		this.name = name;
-		this.view = view;
 	}
 
 	// getters and setters
 	@Id
-    @GeneratedValue
+	@GeneratedValue
 	public int getId() {
 		return id;
 	}
@@ -29,22 +31,14 @@ public class Table {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
+	@Column(nullable = false)
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@OneToOne
-	public View getView() {
-		return view;
-	}
-
-	public void setView(View view) {
-		this.view = view;
 	}
 
 }

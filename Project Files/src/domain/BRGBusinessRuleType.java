@@ -1,21 +1,25 @@
 package domain;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
-public class BusinessRuleType {
+@Table(name="BRG_BusinessRuleType")
+public class BRGBusinessRuleType {
 	private int id;
 	private String name, code, description;
-	private Category category;
+	private BRGCategory category;
 
 	// constructors
-	public BusinessRuleType() { }
+	public BRGBusinessRuleType() { }
 
-	public BusinessRuleType(String name, String code, String description,
-			Category category) {
+	public BRGBusinessRuleType(String name, String code, String description,
+			BRGCategory category) {
 		this.name = name;
 		this.code = code;
 		this.description = description;
@@ -33,6 +37,7 @@ public class BusinessRuleType {
 		this.id = id;
 	}
 	
+	@Column(nullable = false)
 	public String getName() {
 		return name;
 	}
@@ -41,6 +46,7 @@ public class BusinessRuleType {
 		this.name = name;
 	}
 
+	@Column(nullable = false)
 	public String getCode() {
 		return code;
 	}
@@ -49,6 +55,7 @@ public class BusinessRuleType {
 		this.code = code;
 	}
 
+	@Column(nullable = false)
 	public String getDescription() {
 		return description;
 	}
@@ -57,12 +64,12 @@ public class BusinessRuleType {
 		this.description = description;
 	}
 
-	@OneToOne
-	public Category getCategory() {
+	@ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	public BRGCategory getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(BRGCategory category) {
 		this.category = category;
 	}
 }

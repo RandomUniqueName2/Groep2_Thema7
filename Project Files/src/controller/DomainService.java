@@ -2,7 +2,7 @@ package controller;
 
 public class DomainService {
 		
-	public domain.BusinessRule getAllBusinessRules(){
+	public domain.BRGBusinessRule getAllBusinessRules(){
 		return null;
 	}
 

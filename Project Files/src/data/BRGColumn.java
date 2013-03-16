@@ -1,20 +1,24 @@
 package data;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
-public class Column {
+@Table(name="BRG_Column")
+public class BRGColumn {
 	private int id;
 	private String name;
-	private Table table;
+	private BRGTable table;
 
 	// constructors
-	public Column() {}
+	public BRGColumn() {}
 
-	public Column(String name, Table table) {
+	public BRGColumn(String name, BRGTable table) {
 		this.name = name;
 		this.table = table;
 	}
@@ -30,6 +34,7 @@ public class Column {
 		this.id = id;
 	}
 	
+	@Column(nullable = false)
 	public String getName() {
 		return name;
 	}
@@ -38,12 +43,12 @@ public class Column {
 		this.name = name;
 	}
 
-	@OneToOne
-	public Table getTable() {
+	@ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+	public BRGTable getTable() {
 		return table;
 	}
 
-	public void setTable(Table table) {
+	public void setTable(BRGTable table) {
 		this.table = table;
 	}
 
