@@ -1,4 +1,4 @@
-package data;
+package domain.database;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,47 +9,45 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="BRG_Column")
+@Table(name = "BRG_Column")
 public class BRGColumn {
-	private int id;
+	private long id;
 	private String name;
 	private BRGTable table;
 
-	// constructors
-	public BRGColumn() {}
+	public BRGColumn() {
+	}
 
 	public BRGColumn(String name, BRGTable table) {
 		this.name = name;
 		this.table = table;
 	}
 
-	// getters and setters
 	@Id
-    @GeneratedValue
-	public int getId() {
+	@GeneratedValue
+	public long getId() {
 		return id;
 	}
-	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
+
 	@Column(nullable = false)
 	public String getName() {
 		return name;
+	}
+
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	public BRGTable getTable() {
+		return table;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	@ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
-	public BRGTable getTable() {
-		return table;
-	}
-
 	public void setTable(BRGTable table) {
 		this.table = table;
 	}
-
 }

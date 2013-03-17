@@ -1,4 +1,4 @@
-package domain;
+package domain.businessrule;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,12 +7,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="BRG_Category")
+@Table(name = "BRG_Category")
 public class BRGCategory {
+	public static final String STATIC = "STATIC";
+	public static final String DYNAMIC = "DYNAMIC";
+
 	private int id;
 	private String name;
 
-	// constructors
 	public BRGCategory() {
 
 	}
@@ -21,7 +23,6 @@ public class BRGCategory {
 		this.name = name;
 	}
 
-	// getters and setters
 	@Id
 	@GeneratedValue
 	public int getId() {

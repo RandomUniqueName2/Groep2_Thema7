@@ -1,4 +1,4 @@
-package domain;
+package domain.businessrule;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -8,14 +8,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="BRG_BusinessRuleValues")
+@Table(name = "BRG_BusinessRuleValues")
 public class BRGBusinessRuleValue {
 	private int id;
 	private String value;
 	private BRGBusinessRule businessRule;
 
 	// constructors
-	public BRGBusinessRuleValue() { }
+	public BRGBusinessRuleValue() {
+	}
 
 	public BRGBusinessRuleValue(String value) {
 		this.value = value;
@@ -31,7 +32,7 @@ public class BRGBusinessRuleValue {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getValue() {
 		return value;
 	}
@@ -39,8 +40,8 @@ public class BRGBusinessRuleValue {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	
-	@ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	public BRGBusinessRule getBusinessRule() {
 		return businessRule;
 	}
