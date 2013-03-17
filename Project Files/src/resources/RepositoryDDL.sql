@@ -82,14 +82,18 @@ create table BRG_Database (
 );
 
 create table BRG_RuleToColumn (
-    type 					varchar2(255 char)  not null
+    id						number(10,0)		not null
+  , type 					varchar2(255 char)  not null
   , column_id 				number(10,0)		not null
   , rule_id 				number(10,0) 		not null
+  , primary key (id)
  );
 
 create table BRG_RuleToTable (
-    rule_id 				number(10,0)		not null
+	id						number(10,0)		not null
+  , rule_id 				number(10,0)		not null
   , table_id 				number(10,0)		not null
+  , primary key (id)
 );
 
 create table BRG_Table (
@@ -213,8 +217,22 @@ create or replace trigger BRG_View_Trig_ID
 		select BRG_key_sequence.nextval into :new.ID from dual;
   	end;
   	
- create or replace trigger BRG_Category_Trig_ID
+create or replace trigger BRG_Category_Trig_ID
   	before insert on BRG_Category
+  	for each row
+  	begin
+		select BRG_key_sequence.nextval into :new.ID from dual;
+  	end;
+
+create or replace trigger BRG_RTC_Trig_ID
+  	before insert on BRG_RuleToColumn
+  	for each row
+  	begin
+		select BRG_key_sequence.nextval into :new.ID from dual;
+  	end;
+  	 
+create or replace trigger BRG_RTT_Trig_ID
+  	before insert on BRG_RuleToTable
   	for each row
   	begin
 		select BRG_key_sequence.nextval into :new.ID from dual;
