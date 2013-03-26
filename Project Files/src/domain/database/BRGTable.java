@@ -19,20 +19,20 @@ public class BRGTable {
 	private Set<BRGColumn> columns;
 	private long id;
 	private String name;
-	private BRGView view;
+	private BRGScheme view;
 
 	// constructors
 	public BRGTable() {
 		this.columns = new HashSet<BRGColumn>();
 	}
 
-	public BRGTable(String name, BRGView view) {
+	public BRGTable(String name, BRGScheme view) {
 		this.name = name;
 		this.view = view;
 		this.columns = new HashSet<BRGColumn>();
 	}
 
-	@OneToMany(targetEntity = BRGView.class, mappedBy = "database", fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = BRGScheme.class, mappedBy = "database", fetch = FetchType.EAGER)
 	public Set<BRGColumn> getColumns() {
 		return columns;
 	}
@@ -49,7 +49,7 @@ public class BRGTable {
 	}
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	public BRGView getView() {
+	public BRGScheme getView() {
 		return view;
 	}
 
@@ -65,7 +65,7 @@ public class BRGTable {
 		this.name = name;
 	}
 
-	public void setView(BRGView view) {
+	public void setView(BRGScheme view) {
 		this.view = view;
 	}
 

@@ -11,22 +11,21 @@ import javax.swing.JMenuItem;
 @SuppressWarnings("serial")
 public class GeneratorMenuBar extends JMenuBar implements ActionListener {
 	public JMenu file;
-	
 	public JMenuItem connect;
-	
+
 	public GeneratorMenuBar() {
 		super();
-		
-		this.setPreferredSize(new Dimension(800,30));
+
+		this.setPreferredSize(new Dimension(800, 30));
 
 		file = new JMenu("File");
-		
+
 		connect = new JMenuItem("Connect to repository");
 		connect.setActionCommand("connect");
 		connect.addActionListener(this);
-		
+
 		file.add(connect);
-		
+
 		this.add(file);
 	}
 

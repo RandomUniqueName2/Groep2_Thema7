@@ -17,16 +17,16 @@ public class BRGDatabase {
 	private String connectionString;
 	private String databaseProvider;
 	private long id;
-	private Set<BRGView> views;
+	private Set<BRGScheme> views;
 
 	public BRGDatabase() {
-		this.views = new HashSet<BRGView>();
+		this.views = new HashSet<BRGScheme>();
 	}
 
 	public BRGDatabase(String connectionString, String databaseProvider) {
 		this.connectionString = connectionString;
 		this.databaseProvider = databaseProvider;
-		this.views = new HashSet<BRGView>();
+		this.views = new HashSet<BRGScheme>();
 	}
 
 	@Column(nullable = false)
@@ -45,8 +45,8 @@ public class BRGDatabase {
 		return id;
 	}
 
-	@OneToMany(targetEntity = BRGView.class, mappedBy = "database", fetch = FetchType.EAGER)
-	public Set<BRGView> getViews() {
+	@OneToMany(targetEntity = BRGScheme.class, mappedBy = "database", fetch = FetchType.EAGER)
+	public Set<BRGScheme> getViews() {
 		return views;
 	}
 
@@ -62,7 +62,7 @@ public class BRGDatabase {
 		this.id = id;
 	}
 
-	public void setViews(Set<BRGView> views) {
+	public void setViews(Set<BRGScheme> views) {
 		this.views = views;
 	}
 }

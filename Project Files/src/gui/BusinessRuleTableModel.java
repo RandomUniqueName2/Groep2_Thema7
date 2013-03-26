@@ -5,22 +5,21 @@ import java.util.ArrayList;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-import domain.BRGBusinessRule;
-import domain.BRGRuleToTable;
+import domain.businessrule.BRGBusinessRule;
+import domain.mapping.BRGRuleToTable;
 
 public class BusinessRuleTableModel implements TableModel {
 	ArrayList<BRGBusinessRule> data;
 	ArrayList<TableModelListener> listeners;
-	
-	public BusinessRuleTableModel(ArrayList<BRGBusinessRule> data)
-	{
+
+	public BusinessRuleTableModel(ArrayList<BRGBusinessRule> data) {
 		this.data = data;
 	}
-	
+
 	@Override
 	public int getColumnCount() {
 		// Name, Type, Table
-		return  3;
+		return 3;
 	}
 
 	@Override
@@ -31,7 +30,7 @@ public class BusinessRuleTableModel implements TableModel {
 	@Override
 	public Object getValueAt(int r, int c) {
 		if (r < data.size() && c < getColumnCount()) {
-			switch(c) {
+			switch (c) {
 			case 0:
 				return data.get(r).getName();
 			case 1:
@@ -54,7 +53,7 @@ public class BusinessRuleTableModel implements TableModel {
 
 	@Override
 	public void addTableModelListener(TableModelListener l) {
-		//this.listeners.add(l);		
+		// this.listeners.add(l);
 	}
 
 	@Override
@@ -64,16 +63,15 @@ public class BusinessRuleTableModel implements TableModel {
 
 	@Override
 	public String getColumnName(int columnIndex) {
-		switch (columnIndex)
-		{
+		switch (columnIndex) {
 		case 0:
 			return "Name";
 		case 1:
 			return "Rule Type";
-		case 2: 
+		case 2:
 			return "Table(s)";
 		}
-		
+
 		return null;
 	}
 
@@ -89,7 +87,7 @@ public class BusinessRuleTableModel implements TableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		
+
 	}
 
 }
