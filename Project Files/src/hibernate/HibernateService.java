@@ -1,4 +1,4 @@
-package controller;
+package hibernate;
 
 import java.util.Set;
 

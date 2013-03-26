@@ -1,4 +1,4 @@
-package controller;
+package generator;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,5 +1,7 @@
 package gui;
 
+import hibernate.HibernateService;
+
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -13,7 +15,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import main.App;
-import controller.HibernateService;
 
 @SuppressWarnings("serial")
 public class ConnectPopup extends JDialog implements ActionListener {

@@ -1,7 +1,7 @@
 package main;
 
 import gui.GeneratorMainFrame;
-import controller.HibernateService;
+import hibernate.HibernateService;
 
 public class App {
 
