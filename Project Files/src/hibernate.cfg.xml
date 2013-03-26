@@ -1,24 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 
-     <session-factory>
-
-         <!-- Database connection settings -->
-         <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
-         <property name="connection.url"></property>
-         <property name="connection.username"></property>
-         <property name="connection.password"></property>
-		
-	 	 <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
-	 	 
+     <session-factory>	 	 
          <!-- Echo all executed SQL to stdout -->
          <property name="show_sql">true</property>
-         
-         
-         <mapping class="entities.User" />
-         <mapping class="entities.Address" />
-         <mapping class="entities.Car" />
+	 <property name="hibernate.hbm2ddl.auto">validate</property>
+	 <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
      </session-factory>
 
-</hibernate-configuration>    
+</hibernate-configuration>
