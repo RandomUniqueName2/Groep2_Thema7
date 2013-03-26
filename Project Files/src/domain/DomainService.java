@@ -13,7 +13,7 @@ import domain.database.BRGScheme;
 
 public class DomainService {
 	private static Map<String, BRGDatabase> databases = null;
-	private static Map<String, BRGScheme> vieuws = null;
+	private static Map<String, BRGScheme> schemes = null;
 	private static Map<String, BRGTable> tables = null;
 	private static Map<String, BRGColumn> columns = null;
 
@@ -54,7 +54,7 @@ public class DomainService {
 			types.put(brt.getCode(), brt);
 		}
 
-		DomainService.ruletypes = types;
+		DomainService.setAllRuletypes(types);
 	}
 
 	/*
@@ -95,5 +95,53 @@ public class DomainService {
 
 		BRGTable t2 = new BRGTable("Adress", vw);
 		BRGColumn t2c1 = new BRGColumn("Street", t2);
+	}
+
+	public static Map<String, BRGColumn> getAllColumns() {
+		return columns;
+	}
+
+	public static void setAllColumns(Map<String, BRGColumn> columns) {
+		DomainService.columns = columns;
+	}
+
+	public static Map<String, BRGScheme> getAllSchemes() {
+		return schemes;
+	}
+
+	public static void setAllSchemes(Map<String, BRGScheme> schemes) {
+		DomainService.schemes = schemes;
+	}
+
+	public static Map<String, BRGDatabase> getAllDatabases() {
+		return databases;
+	}
+
+	public static void setAllDatabases(Map<String, BRGDatabase> databases) {
+		DomainService.databases = databases;
+	}
+
+	public static Map<String, BRGBusinessRule> getAllRules() {
+		return rules;
+	}
+
+	public static void setAllRules(Map<String, BRGBusinessRule> rules) {
+		DomainService.rules = rules;
+	}
+
+	public static Map<String, BRGBusinessRuleType> getAllRuletypes() {
+		return ruletypes;
+	}
+
+	public static void setAllRuletypes(Map<String, BRGBusinessRuleType> ruletypes) {
+		DomainService.ruletypes = ruletypes;
+	}
+
+	public static Map<String, BRGTable> getAllTables() {
+		return tables;
+	}
+
+	public static void setAllTables(Map<String, BRGTable> tables) {
+		DomainService.tables = tables;
 	}
 }

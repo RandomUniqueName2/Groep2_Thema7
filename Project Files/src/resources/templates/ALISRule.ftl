@@ -1,10 +1,10 @@
-    -- Attribute Compare Rule :: ${column} ${operand} ${value}
+    -- Attribute List Rule :: ${column} ${valuelist}
     DECLARE
         l_passed boolean := false;
     BEGIN
         IF l_oper IN ('INS', 'UPD')
         THEN
-            l_passed := :new.${column} ${operand} ${value}
+            l_passed := :new.${column} in(${valuelist})
             
             IF NOT l_passed
             THEN 
