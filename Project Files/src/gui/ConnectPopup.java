@@ -91,16 +91,25 @@ public class ConnectPopup extends JDialog implements ActionListener {
 			String connString = this.connectStringField.getText();
 			String usrnString = this.usernameField.getText();
 			String pswdString = new String(this.passwordField.getPassword());
-
+			
+			
 			try {
-				// HibernateService.setHibernateConnection(connString,
-				// usrnString,
-				// pswdString);
-				HibernateService.setHibernateConnection(
-						"jdbc:oracle:thin:@ondora01.hu.nl:8521/cursus01.hu.nl",
-						"THO7_2012_2B_TEAM2", "THO7_2012_2B_TEAM2");
-				HibernateService.getSessionFactory();
-				this.dispose();
+				if(connString.equals("") || usrnString.equals("") || pswdString.equals("")){
+					JOptionPane.showMessageDialog(this,"Please fill in all forms to connect." + connString + usrnString + pswdString,"Connection error",JOptionPane.ERROR_MESSAGE);
+//					this.connectStringField.setText("jdbc:oracle:thin:@ondora01.hu.nl:8521/cursus01.hu.nl");
+//					this.usernameField.setText("THO7_2012_2B_TEAM2");
+//					this.passwordField.setText("THO7_2012_2B_TEAM2");
+				}
+				else{
+					 HibernateService.setHibernateConnection(connString,
+					 usrnString,
+					 pswdString);
+//					HibernateService.setHibernateConnection(
+//							"jdbc:oracle:thin:@ondora01.hu.nl:8521/cursus01.hu.nl",
+//							"THO7_2012_2B_TEAM2", "THO7_2012_2B_TEAM2");
+					HibernateService.getSessionFactory();
+					this.dispose();
+				}
 			} catch (Exception err) {
 				err.printStackTrace();
 				JOptionPane
@@ -109,7 +118,6 @@ public class ConnectPopup extends JDialog implements ActionListener {
 								"Connection to repository failed.\nPlease doublecheck the connection details.",
 								"Connection error", JOptionPane.ERROR_MESSAGE);
 			}
-
 		}
 
 		if (action == "cancel") {
