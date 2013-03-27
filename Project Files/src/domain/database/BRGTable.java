@@ -19,16 +19,16 @@ public class BRGTable {
 	private Set<BRGColumn> columns;
 	private long id;
 	private String name;
-	private BRGScheme view;
+	private BRGScheme scheme;
 
 	// constructors
 	public BRGTable() {
 		this.columns = new HashSet<BRGColumn>();
 	}
 
-	public BRGTable(String name, BRGScheme view) {
+	public BRGTable(String name, BRGScheme scheme) {
 		this.name = name;
-		this.view = view;
+		this.scheme = scheme;
 		this.columns = new HashSet<BRGColumn>();
 	}
 
@@ -49,8 +49,8 @@ public class BRGTable {
 	}
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	public BRGScheme getView() {
-		return view;
+	public BRGScheme getScheme() {
+		return scheme;
 	}
 
 	public void setColumns(Set<BRGColumn> columns) {
@@ -65,8 +65,8 @@ public class BRGTable {
 		this.name = name;
 	}
 
-	public void setView(BRGScheme view) {
-		this.view = view;
+	public void setScheme(BRGScheme scheme) {
+		this.scheme = scheme;
 	}
 
 }

@@ -1,34 +1,67 @@
 package domain;
 
-import java.util.HashMap;
-import java.util.Map;
+import hibernate.HibernateService;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.hibernate.Session;
 
 import domain.businessrule.BRGBusinessRule;
 import domain.businessrule.BRGBusinessRuleType;
+import domain.businessrule.BRGBusinessRuleValue;
 import domain.businessrule.BRGCategory;
 import domain.database.BRGColumn;
 import domain.database.BRGDatabase;
-import domain.database.BRGTable;
 import domain.database.BRGScheme;
+import domain.database.BRGTable;
+import domain.mapping.BRGRuleToColumn;
+import domain.mapping.BRGRuleToTable;
 
 public class DomainService {
-	private static Map<String, BRGDatabase> databases = null;
-	private static Map<String, BRGScheme> schemes = null;
-	private static Map<String, BRGTable> tables = null;
-	private static Map<String, BRGColumn> columns = null;
+	private static List<BRGDatabase> databases = null;
+	private static List<BRGScheme> schemes = null;
+	private static List<BRGTable> tables = null;
+	private static List<BRGColumn> columns = null;
 
-	private static Map<String, BRGBusinessRuleType> ruletypes = null;
-	private static Map<String, BRGBusinessRule> rules = null;
+	private static List<BRGBusinessRuleType> ruletypes = null;
+	private static List<BRGBusinessRule> rules = null;
+	
+	private static List<BRGCategory> categories = null;
+	private static List<BRGBusinessRuleValue> values = null;
+	
+	public static void Init() {
+		Set<Class<?>> toMap = new HashSet<Class<?>>();
+		
+		toMap.add(BRGDatabase.class);
+		toMap.add(BRGScheme.class);
+		toMap.add(BRGTable.class);
+		toMap.add(BRGColumn.class);
+		
+		toMap.add(BRGBusinessRuleType.class);
+		toMap.add(BRGBusinessRule.class);
+		
+
+		toMap.add(BRGCategory.class);
+		toMap.add(BRGBusinessRuleValue.class);
+		
+		toMap.add(BRGRuleToColumn.class);
+		toMap.add(BRGRuleToTable.class);
+		
+		HibernateService.mapClasses(toMap);
+	}
 
 	public static void createBaseRepository() {
-		Map<String, BRGCategory> cats = new HashMap<String, BRGCategory>();
-		Map<String, BRGBusinessRuleType> types = new HashMap<String, BRGBusinessRuleType>();
+		List<BRGCategory> cats = new ArrayList<BRGCategory>();
+		List<BRGBusinessRuleType> types = new ArrayList<BRGBusinessRuleType>();
 
 		BRGCategory staticCat = new BRGCategory(BRGCategory.STATIC);
 		BRGCategory dynamicCat = new BRGCategory(BRGCategory.DYNAMIC);
 
-		cats.put(BRGCategory.STATIC, staticCat);
-		cats.put(BRGCategory.DYNAMIC, dynamicCat);
+		cats.add(staticCat);
+		cats.add(dynamicCat);
 
 		BRGBusinessRuleType[] _types = {
 				new BRGBusinessRuleType("Attribute Range Rule",
@@ -51,7 +84,7 @@ public class DomainService {
 						BRGBusinessRuleType.MODI, "", dynamicCat) };
 
 		for (BRGBusinessRuleType brt : _types) {
-			types.put(brt.getCode(), brt);
+			types.add(brt);
 		}
 
 		DomainService.setAllRuletypes(types);
@@ -97,51 +130,62 @@ public class DomainService {
 		BRGColumn t2c1 = new BRGColumn("Street", t2);
 	}
 
-	public static Map<String, BRGColumn> getAllColumns() {
+	public static List<BRGColumn> getAllColumns() {
 		return columns;
 	}
 
-	public static void setAllColumns(Map<String, BRGColumn> columns) {
+	public static void setAllColumns(List<BRGColumn> columns) {
 		DomainService.columns = columns;
 	}
 
-	public static Map<String, BRGScheme> getAllSchemes() {
+	public static List<BRGScheme> getAllSchemes() {
 		return schemes;
 	}
 
-	public static void setAllSchemes(Map<String, BRGScheme> schemes) {
+	public static void setAllSchemes(List<BRGScheme> schemes) {
 		DomainService.schemes = schemes;
 	}
 
-	public static Map<String, BRGDatabase> getAllDatabases() {
+	public static List<BRGDatabase> getAllDatabases() {
 		return databases;
 	}
 
-	public static void setAllDatabases(Map<String, BRGDatabase> databases) {
+	public static void setAllDatabases(List<BRGDatabase> databases) {
 		DomainService.databases = databases;
 	}
 
-	public static Map<String, BRGBusinessRule> getAllRules() {
-		return rules;
+	@SuppressWarnings("unchecked")
+	public static List<BRGBusinessRule> getAllRules() {
+		if(HibernateService.isConnected()){
+			Session session = HibernateService.getSessionFactory().openSession();
+			session.beginTransaction();
+			 List<BRGBusinessRule> allRules = session.createQuery("from BRGBusinessRule").list();
+			 session.getTransaction().commit();
+			 session.close();
+			return allRules;
+		}
+		else{
+			return null;
+		}
 	}
 
-	public static void setAllRules(Map<String, BRGBusinessRule> rules) {
+	public static void setAllRules(List<BRGBusinessRule> rules) {
 		DomainService.rules = rules;
 	}
 
-	public static Map<String, BRGBusinessRuleType> getAllRuletypes() {
+	public static List<BRGBusinessRuleType> getAllRuletypes() {
 		return ruletypes;
 	}
 
-	public static void setAllRuletypes(Map<String, BRGBusinessRuleType> ruletypes) {
+	public static void setAllRuletypes(List<BRGBusinessRuleType> ruletypes) {
 		DomainService.ruletypes = ruletypes;
 	}
 
-	public static Map<String, BRGTable> getAllTables() {
+	public static List<BRGTable> getAllTables() {
 		return tables;
 	}
 
-	public static void setAllTables(Map<String, BRGTable> tables) {
+	public static void setAllTables(List<BRGTable> tables) {
 		DomainService.tables = tables;
 	}
 }
