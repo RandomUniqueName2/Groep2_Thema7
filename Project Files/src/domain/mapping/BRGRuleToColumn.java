@@ -17,15 +17,15 @@ public class BRGRuleToColumn {
 	private BRGColumn column;
 	private Long id;
 	private BRGBusinessRule rule;
-	private String type;
+	private String function;
 
 	// constructors
 	public BRGRuleToColumn() {
 	}
 
-	public BRGRuleToColumn(domain.database.BRGColumn column, String type) {
+	public BRGRuleToColumn(domain.database.BRGColumn column, String function) {
 		this.column = column;
-		this.type = type;
+		this.function = function;
 	}
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -46,8 +46,8 @@ public class BRGRuleToColumn {
 	}
 
 	@Column(nullable = false)
-	public String getType() {
-		return type;
+	public String getFunction() {
+		return function;
 	}
 
 	public void setColumn(domain.database.BRGColumn column) {
@@ -62,8 +62,8 @@ public class BRGRuleToColumn {
 		this.rule = rule;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setFunction(String function) {
+		this.function = function;
 	}
 
 }

@@ -15,14 +15,14 @@ import domain.businessrule.BRGBusinessRuleValue;
 import domain.businessrule.BRGCategory;
 import domain.database.BRGColumn;
 import domain.database.BRGDatabase;
-import domain.database.BRGScheme;
+import domain.database.BRGSchema;
 import domain.database.BRGTable;
 import domain.mapping.BRGRuleToColumn;
 import domain.mapping.BRGRuleToTable;
 
 public class DomainService {
 	private static List<BRGDatabase> databases = null;
-	private static List<BRGScheme> schemes = null;
+	private static List<BRGSchema> schemes = null;
 	private static List<BRGTable> tables = null;
 	private static List<BRGColumn> columns = null;
 
@@ -36,7 +36,7 @@ public class DomainService {
 		Set<Class<?>> toMap = new HashSet<Class<?>>();
 		
 		toMap.add(BRGDatabase.class);
-		toMap.add(BRGScheme.class);
+		toMap.add(BRGSchema.class);
 		toMap.add(BRGTable.class);
 		toMap.add(BRGColumn.class);
 		
@@ -120,7 +120,7 @@ public class DomainService {
 		BRGDatabase db = new BRGDatabase(
 				"jdbc:oracle:thin:@ondora01.hu.nl:8521/cursus01.hu.nl", "null");
 
-		BRGScheme vw = new BRGScheme("THO7_2012_2B_TEAM2", db);
+		BRGSchema vw = new BRGSchema("THO7_2012_2B_TEAM2", db);
 
 		BRGTable t1 = new BRGTable("Person", vw);
 		BRGColumn t1c1 = new BRGColumn("name", t1);
@@ -138,11 +138,11 @@ public class DomainService {
 		DomainService.columns = columns;
 	}
 
-	public static List<BRGScheme> getAllSchemes() {
+	public static List<BRGSchema> getAllSchemes() {
 		return schemes;
 	}
 
-	public static void setAllSchemes(List<BRGScheme> schemes) {
+	public static void setAllSchemes(List<BRGSchema> schemes) {
 		DomainService.schemes = schemes;
 	}
 

@@ -14,18 +14,18 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "BRG_Scheme")
-public class BRGScheme {
+@Table(name = "BRG_Schema")
+public class BRGSchema {
 	private BRGDatabase database;
 	private long id;
 	private String name;
 	private Set<BRGTable> tables;
 
-	public BRGScheme() {
+	public BRGSchema() {
 		this.tables = new HashSet<BRGTable>();
 	}
 
-	public BRGScheme(String name, BRGDatabase database) {
+	public BRGSchema(String name, BRGDatabase database) {
 		this.name = name;
 		this.database = database;
 		this.tables = new HashSet<BRGTable>();
@@ -47,7 +47,7 @@ public class BRGScheme {
 		return this.name;
 	}
 
-	@OneToMany(targetEntity = BRGScheme.class, mappedBy = "database", fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = BRGSchema.class, mappedBy = "database", fetch = FetchType.EAGER)
 	public Set<BRGTable> getTables() {
 		return tables;
 	}
