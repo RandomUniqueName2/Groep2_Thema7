@@ -28,28 +28,27 @@ public class DomainService {
 
 	private static List<BRGBusinessRuleType> ruletypes = null;
 	private static List<BRGBusinessRule> rules = null;
-	
+
 	private static List<BRGCategory> categories = null;
 	private static List<BRGBusinessRuleValue> values = null;
-	
+
 	public static void Init() {
 		Set<Class<?>> toMap = new HashSet<Class<?>>();
-		
+
 		toMap.add(BRGDatabase.class);
 		toMap.add(BRGSchema.class);
 		toMap.add(BRGTable.class);
 		toMap.add(BRGColumn.class);
-		
+
 		toMap.add(BRGBusinessRuleType.class);
 		toMap.add(BRGBusinessRule.class);
-		
 
 		toMap.add(BRGCategory.class);
 		toMap.add(BRGBusinessRuleValue.class);
-		
+
 		toMap.add(BRGRuleToColumn.class);
 		toMap.add(BRGRuleToTable.class);
-		
+
 		HibernateService.mapClasses(toMap);
 	}
 
@@ -90,46 +89,6 @@ public class DomainService {
 		DomainService.setAllRuletypes(types);
 	}
 
-	/*
-	 * public static void scanTargetDBDomain(Session session, BRGDatabase db) {
-	 * 
-	 * SQLQuery schemaQuery = session.createSQLQuery("").addScalar("USERNAME",
-	 * StringType.INSTANCE);
-	 * 
-	 * schemaQuery.list(); }
-	 */
-
-	/*
-	 * public static void persistDomainToDB(Session session) { Transaction tx =
-	 * session.beginTransaction();
-	 * 
-	 * if (DomainService.categories != null) { for (BRGCategory cat :
-	 * DomainService.categories.values()) { session.persist(cat); } }
-	 * 
-	 * if (DomainService.ruletypes != null) { for (BRGBusinessRuleType brt :
-	 * DomainService.ruletypes.values()) { session.persist(brt);
-	 * 
-	 * } }
-	 * 
-	 * // TODO: Persist other stuff
-	 * 
-	 * tx.commit(); }
-	 */
-
-	public static void getMockTargetDBDomain() {
-		BRGDatabase db = new BRGDatabase(
-				"jdbc:oracle:thin:@ondora01.hu.nl:8521/cursus01.hu.nl", "null");
-
-		BRGSchema vw = new BRGSchema("THO7_2012_2B_TEAM2", db);
-
-		BRGTable t1 = new BRGTable("Person", vw);
-		BRGColumn t1c1 = new BRGColumn("name", t1);
-		BRGColumn t1c2 = new BRGColumn("age", t1);
-
-		BRGTable t2 = new BRGTable("Adress", vw);
-		BRGColumn t2c1 = new BRGColumn("Street", t2);
-	}
-
 	public static List<BRGColumn> getAllColumns() {
 		return columns;
 	}
@@ -156,15 +115,16 @@ public class DomainService {
 
 	@SuppressWarnings("unchecked")
 	public static List<BRGBusinessRule> getAllRules() {
-		if(HibernateService.isConnected()){
-			Session session = HibernateService.getSessionFactory().openSession();
+		if (HibernateService.isConnected()) {
+			Session session = HibernateService.getSessionFactory()
+					.openSession();
 			session.beginTransaction();
-			 List<BRGBusinessRule> allRules = session.createQuery("from BRGBusinessRule").list();
-			 session.getTransaction().commit();
-			 session.close();
+			List<BRGBusinessRule> allRules = session.createQuery(
+					"from BRGBusinessRule").list();
+			session.getTransaction().commit();
+			session.close();
 			return allRules;
-		}
-		else{
+		} else {
 			return null;
 		}
 	}

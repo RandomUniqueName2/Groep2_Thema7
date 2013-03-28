@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -94,26 +94,30 @@ public class ConnectPopup extends JDialog implements ActionListener {
 			String connString = this.connectStringField.getText();
 			String usrnString = this.usernameField.getText();
 			String pswdString = new String(this.passwordField.getPassword());
-			
-			
+
 			try {
-				if(connString.equals("") || usrnString.equals("") || pswdString.equals("")){
-					JOptionPane.showMessageDialog(this,"Please fill in all forms to connect." + connString + usrnString + pswdString,"Connection error",JOptionPane.ERROR_MESSAGE);
-//					this.connectStringField.setText("jdbc:oracle:thin:@ondora01.hu.nl:8521/cursus01.hu.nl");
-//					this.usernameField.setText("THO7_2012_2B_TEAM2");
-//					this.passwordField.setText("THO7_2012_2B_TEAM2");
-				}
-				else{
-					 HibernateService.setHibernateConnection(connString,
-					 usrnString,
-					 pswdString);
-//					HibernateService.setHibernateConnection(
-//							"jdbc:oracle:thin:@ondora01.hu.nl:8521/cursus01.hu.nl",
-//							"THO7_2012_2B_TEAM2", "THO7_2012_2B_TEAM2");
-					HibernateService.getSessionFactory();
-					GeneratorMainFrame.table.setModel(new BusinessRuleTableModel((ArrayList<BRGBusinessRule>)DomainService.getAllRules()));
-					this.dispose();
-				}
+				// if (connString.equals("") || usrnString.equals("")
+				// || pswdString.equals("")) {
+				// JOptionPane.showMessageDialog(this,
+				// "Please fill in all forms to connect." + connString
+				// + usrnString + pswdString,
+				// "Connection error", JOptionPane.ERROR_MESSAGE);
+				// this.connectStringField.setText("jdbc:oracle:thin:@ondora01.hu.nl:8521/cursus01.hu.nl");
+				// this.usernameField.setText("THO7_2012_2B_TEAM2");
+				// this.passwordField.setText("THO7_2012_2B_TEAM2");
+				// } else {
+				// HibernateService.setHibernateConnection(connString,
+				// usrnString, pswdString);
+				HibernateService.setHibernateConnection(
+						"jdbc:oracle:thin:@ondora01.hu.nl:8521/cursus01.hu.nl",
+						"THO7_2012_2B_TEAM2", "THO7_2012_2B_TEAM2");
+
+				GeneratorMainFrame.table.setModel(new BusinessRuleTableModel(
+						(List<BRGBusinessRule>) DomainService.getAllRules()));
+				GeneratorMainFrame.table.updateUI();
+
+				this.dispose();
+				// }
 			} catch (Exception err) {
 				err.printStackTrace();
 				JOptionPane

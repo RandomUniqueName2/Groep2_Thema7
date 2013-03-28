@@ -3,19 +3,16 @@ package gui;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import domain.DomainService;
 import domain.businessrule.BRGBusinessRule;
 
 @SuppressWarnings("serial")
 public class GeneratorMainFrame extends JFrame {
 	private GeneratorMenuBar topMenuBar;
-	public static JTable table = new JTable();
+	public static JTable table;
 
 	public GeneratorMainFrame() {
 		super();
@@ -24,30 +21,21 @@ public class GeneratorMainFrame extends JFrame {
 		this.setPreferredSize(new Dimension(800, 600));
 		getContentPane().setLayout(null);
 
-		JScrollPane tableWrapScrollPane = new JScrollPane();
-		tableWrapScrollPane.setBounds(-3, 51, 797, 490);
-		getContentPane().add(tableWrapScrollPane);
-		getTable().setFillsViewportHeight(true);
-		tableWrapScrollPane.setViewportView(getTable());
+		table = new JTable();
+		table.setFillsViewportHeight(true);
 
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBounds(-3, 0, 797, 52);
-		getContentPane().add(buttonPanel);
-		buttonPanel.setLayout(null);
-
-		JButton btnGenerate = new JButton("Generate");
-		btnGenerate.setBounds(10, 11, 120, 30);
-		buttonPanel.add(btnGenerate);
-		this.setResizable(false);
-		this.setLocationByPlatform(true);
-		DomainService ds = new DomainService();
-		getContentPane().add(table);
-
-		table.setModel(new BusinessRuleTableModel(
-				new ArrayList<BRGBusinessRule>()));
+		JScrollPane tableWrapScrollPane = new JScrollPane(table);
+		tableWrapScrollPane.setBounds(0, 0, 800, 600);
 
 		topMenuBar = new GeneratorMenuBar();
 		this.setJMenuBar(topMenuBar);
+
+		BusinessRuleTableModel model = new BusinessRuleTableModel(
+				new ArrayList<BRGBusinessRule>());
+
+		table.setModel(model);
+
+		getContentPane().add(tableWrapScrollPane);
 
 		this.pack();
 		this.setVisible(true);

@@ -6,12 +6,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import domain.mapping.BRGRuleToColumn;
 import domain.mapping.BRGRuleToTable;
@@ -26,6 +28,15 @@ public class BRGBusinessRule {
 	private String operator;
 	private List<BRGRuleToColumn> ruleToColumn;
 	private List<BRGRuleToTable> ruleToTable;
+	private Boolean implemented;
+
+	public Boolean getImplemented() {
+		return implemented;
+	}
+
+	public void setImplemented(Boolean implemented) {
+		this.implemented = implemented;
+	}
 
 	public BRGBusinessRule() {
 		businessRuleValues = new ArrayList<BRGBusinessRuleValue>();
@@ -46,7 +57,8 @@ public class BRGBusinessRule {
 		return businessRuleType;
 	}
 
-	@OneToMany(targetEntity = BRGBusinessRuleValue.class, mappedBy = "businessRule", fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = BRGBusinessRuleValue.class, mappedBy = "businessRule")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	public List<BRGBusinessRuleValue> getBusinessRuleValues() {
 		return businessRuleValues;
 	}
@@ -67,12 +79,14 @@ public class BRGBusinessRule {
 		return operator;
 	}
 
-	@OneToMany(targetEntity = BRGRuleToColumn.class, mappedBy = "rule", fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = BRGRuleToColumn.class, mappedBy = "rule")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	public List<BRGRuleToColumn> getRuleToColumn() {
 		return ruleToColumn;
 	}
 
-	@OneToMany(targetEntity = BRGRuleToTable.class, mappedBy = "rule", fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = BRGRuleToTable.class, mappedBy = "rule")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	public List<BRGRuleToTable> getRuleToTable() {
 		return ruleToTable;
 	}
