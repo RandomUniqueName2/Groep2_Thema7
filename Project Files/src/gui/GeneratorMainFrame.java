@@ -9,12 +9,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import domain.DomainService;
 import domain.businessrule.BRGBusinessRule;
 
 @SuppressWarnings("serial")
 public class GeneratorMainFrame extends JFrame {
 	private GeneratorMenuBar topMenuBar;
-	private final JTable table = new JTable();
+	public static JTable table = new JTable();
 
 	public GeneratorMainFrame() {
 		super();
@@ -39,8 +40,11 @@ public class GeneratorMainFrame extends JFrame {
 		buttonPanel.add(btnGenerate);
 		this.setResizable(false);
 		this.setLocationByPlatform(true);
+		DomainService ds = new DomainService();
+		getContentPane().add(table);
 
-		table.setModel(new BusinessRuleTableModel(new ArrayList<BRGBusinessRule>()));
+		table.setModel(new BusinessRuleTableModel(
+				new ArrayList<BRGBusinessRule>()));
 
 		topMenuBar = new GeneratorMenuBar();
 		this.setJMenuBar(topMenuBar);

@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -15,6 +16,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import main.App;
+import domain.DomainService;
+import domain.businessrule.BRGBusinessRule;
 
 @SuppressWarnings("serial")
 public class ConnectPopup extends JDialog implements ActionListener {
@@ -108,6 +111,7 @@ public class ConnectPopup extends JDialog implements ActionListener {
 //							"jdbc:oracle:thin:@ondora01.hu.nl:8521/cursus01.hu.nl",
 //							"THO7_2012_2B_TEAM2", "THO7_2012_2B_TEAM2");
 					HibernateService.getSessionFactory();
+					GeneratorMainFrame.table.setModel(new BusinessRuleTableModel((ArrayList<BRGBusinessRule>)DomainService.getAllRules()));
 					this.dispose();
 				}
 			} catch (Exception err) {
