@@ -1,9 +1,7 @@
 package domain.businessrule;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,19 +24,19 @@ public class BRGBusinessRule {
 	private int id;
 	private String name;
 	private String operator;
-	private Set<BRGRuleToColumn> ruleToColumn;
-	private Set<BRGRuleToTable> ruleToTable;
+	private List<BRGRuleToColumn> ruleToColumn;
+	private List<BRGRuleToTable> ruleToTable;
 
 	public BRGBusinessRule() {
 		businessRuleValues = new ArrayList<BRGBusinessRuleValue>();
-		ruleToTable = new HashSet<BRGRuleToTable>();
-		ruleToColumn = new HashSet<BRGRuleToColumn>();
+		ruleToTable = new ArrayList<BRGRuleToTable>();
+		ruleToColumn = new ArrayList<BRGRuleToColumn>();
 	}
 
 	public BRGBusinessRule(String name, String operator) {
 		businessRuleValues = new ArrayList<BRGBusinessRuleValue>();
-		ruleToTable = new HashSet<BRGRuleToTable>();
-		ruleToColumn = new HashSet<BRGRuleToColumn>();
+		ruleToTable = new ArrayList<BRGRuleToTable>();
+		ruleToColumn = new ArrayList<BRGRuleToColumn>();
 		this.name = name;
 		this.operator = operator;
 	}
@@ -70,12 +68,12 @@ public class BRGBusinessRule {
 	}
 
 	@OneToMany(targetEntity = BRGRuleToColumn.class, mappedBy = "rule", fetch = FetchType.EAGER)
-	public Set<BRGRuleToColumn> getRuleToColumn() {
+	public List<BRGRuleToColumn> getRuleToColumn() {
 		return ruleToColumn;
 	}
 
 	@OneToMany(targetEntity = BRGRuleToTable.class, mappedBy = "rule", fetch = FetchType.EAGER)
-	public Set<BRGRuleToTable> getRuleToTable() {
+	public List<BRGRuleToTable> getRuleToTable() {
 		return ruleToTable;
 	}
 
@@ -100,11 +98,11 @@ public class BRGBusinessRule {
 		this.operator = operator;
 	}
 
-	public void setRuleToColumn(Set<BRGRuleToColumn> ruleToColumn) {
+	public void setRuleToColumn(List<BRGRuleToColumn> ruleToColumn) {
 		this.ruleToColumn = ruleToColumn;
 	}
 
-	public void setRuleToTable(Set<BRGRuleToTable> ruleToTable) {
+	public void setRuleToTable(List<BRGRuleToTable> ruleToTable) {
 		this.ruleToTable = ruleToTable;
 	}
 }

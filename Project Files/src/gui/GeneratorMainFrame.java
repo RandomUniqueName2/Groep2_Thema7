@@ -1,12 +1,15 @@
 package gui;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
+import domain.businessrule.BRGBusinessRule;
 
 @SuppressWarnings("serial")
 public class GeneratorMainFrame extends JFrame {
@@ -36,6 +39,8 @@ public class GeneratorMainFrame extends JFrame {
 		buttonPanel.add(btnGenerate);
 		this.setResizable(false);
 		this.setLocationByPlatform(true);
+
+		table.setModel(new BusinessRuleTableModel(new ArrayList<BRGBusinessRule>()));
 
 		topMenuBar = new GeneratorMenuBar();
 		this.setJMenuBar(topMenuBar);
