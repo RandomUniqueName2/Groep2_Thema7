@@ -45,7 +45,7 @@ public class BRGColumn {
 		return this.name;
 	}
 
-	@OneToMany(targetEntity = BRGRuleToColumn.class, mappedBy = "column")
+	@OneToMany(targetEntity = BRGRuleToColumn.class, mappedBy = "databaseColumn")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	public Set<BRGRuleToColumn> getRuleToColumns() {
 		return this.ruleToColumns;

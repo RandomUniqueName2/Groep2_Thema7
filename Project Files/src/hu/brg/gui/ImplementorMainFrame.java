@@ -1,7 +1,9 @@
 package hu.brg.gui;
 
+import hu.brg.domain.DomainService;
 import hu.brg.domain.businessrule.BRGBusinessRule;
 import hu.brg.domain.mapping.BRGRuleToTable;
+import hu.brg.implementor.ImplementorService;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +24,8 @@ import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
 public class ImplementorMainFrame extends JFrame implements ActionListener {
+	private final DomainService ds = new DomainService();
+	private final ImplementorService is = new ImplementorService();
 
 	private JPanel contentPane;
 	private JTable table;
@@ -76,12 +80,6 @@ public class ImplementorMainFrame extends JFrame implements ActionListener {
 			}
 		});
 		
-		//DomainService ds = new DomainService();
-		//ds.connectToRepository("jdbc:oracle:thin:@ondora01.hu.nl:8521/cursus01.hu.nl",
-		//		"THO7_2012_2B_TEAM2", "THO7_2012_2B_TEAM2");
-		
-		//this.setTableData(ds.getAllBusinessRules());
-		
 		table.getColumnModel().getColumn(0).setPreferredWidth(30);
 		table.getColumnModel().getColumn(0).setMaxWidth(30);
 		
@@ -118,7 +116,7 @@ public class ImplementorMainFrame extends JFrame implements ActionListener {
 				SBTables.append(t.getBusinessRule().getName() + " ");
 			}
 			
-			modelData[i][0] = rule.isImplemented();
+			modelData[i][0] = rule.isImplemented() != null ? rule.isImplemented() : false;
 			modelData[i][1] = rule.getName();
 			modelData[i][2] = rule.getBusinessRuleType().getName();
 			modelData[i][3] = SBTables.toString();
@@ -129,6 +127,15 @@ public class ImplementorMainFrame extends JFrame implements ActionListener {
 			new String[] {
 				"", "Name", "Type", "Table(s)"
 			}
-		));
+		) {
+			@SuppressWarnings("rawtypes")
+			Class[] columnTypes = new Class[] {
+				Boolean.class, String.class, String.class, String.class
+			};
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
 	}
 }

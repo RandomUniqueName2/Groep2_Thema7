@@ -103,7 +103,5 @@ public class ConnectPopup extends JDialog implements ActionListener {
 		if (anEvent.getActionCommand() == "cancel") {
 			this.dispose();
 		}
-		
 	}
-
 }

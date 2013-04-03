@@ -55,7 +55,7 @@ public class BRGTable {
 		return this.name;
 	}
 
-	@OneToMany(targetEntity = BRGRuleToTable.class, mappedBy = "table")
+	@OneToMany(targetEntity = BRGRuleToTable.class, mappedBy = "databaseTable")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	public Set<BRGRuleToTable> getRuleToTables() {
 		return this.ruleToTables;

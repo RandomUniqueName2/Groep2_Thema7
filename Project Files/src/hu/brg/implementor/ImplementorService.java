@@ -4,8 +4,10 @@ import hu.brg.domain.businessrule.BRGBusinessRule;
 import hu.brg.domain.database.BRGTable;
 import hu.brg.domain.mapping.BRGRuleToTable;
 import hu.brg.implementor.generator.TableGenerator;
+import hu.brg.implementor.generator.strategies.oracle.OracleRulePersistor;
 import hu.brg.implementor.generator.strategies.oracle.OracleTableGenerator;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +15,7 @@ import java.util.Set;
 public class ImplementorService {
 	private ImplementorStrategy strategy;
 	
-	public final void implementBusinessRules(Collection<BRGBusinessRule> forRules) {
+	public final void implementBusinessRules(Collection<BRGBusinessRule> forRules, RulePersistor persistor) throws SQLException, Exception {
 		Set<BRGTable> tables = new HashSet<BRGTable>();
 		
 		for (BRGBusinessRule rule : forRules) {
@@ -23,13 +25,11 @@ public class ImplementorService {
 		}
 		
 		TableGenerator generator = getTableGenerator();
-		RulePersistor persistor = getRulePersistor();
 		
-		for (BRGTable table : tables) {
+		for (BRGTable table : tables) {			
 			String sqlCode = generator.generateRulesForTable(table);
-			persistor.persist(sqlCode);
+			persistor.runStatement(sqlCode);
 		}
-		
 	}
 	
 	private final TableGenerator getTableGenerator() {
@@ -46,8 +46,17 @@ public class ImplementorService {
 		return generator;
 	}
 	
-	private final RulePersistor getRulePersistor() {
-		// TODO Get a rulepersistor;
-		return null;
+	public final RulePersistor getRulePersistor() {
+		RulePersistor persistor = null;
+		
+		switch (strategy) {
+		case ORACLE:
+			persistor = new OracleRulePersistor();
+			break;
+		default:
+			break;
+		}
+		
+		return persistor;
 	}
 }

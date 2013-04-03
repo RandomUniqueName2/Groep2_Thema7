@@ -22,11 +22,11 @@ public class OracleTableGenerator extends TableGenerator {
 		
 		data.put("tableName", forTable.getName());
 		
-		return fms.processTemplate("oracle/pretablewrapper", data);
+		return fms.processTemplate("oracle/pretablewrapper.ftl", data);
 	}
 
 	@Override
 	protected String getTablePostWrapper(BRGTable forTable) {
-		return fms.processTemplate("oracle/posttablewrapper", null);
+		return fms.processTemplate("oracle/posttablewrapper.ftl", null);
 	}
 }

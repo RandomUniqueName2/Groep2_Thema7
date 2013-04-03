@@ -19,9 +19,6 @@ public class HibernateService {
 		config.setProperty("hibernate.connection.password", password);
 
 		config.configure();
-		
-		// Test connection, will throw error if fails
-		hibernateFactory.buildSessionFactory().openSession().close();
 	}
 	
 	public void mapClass(Class<?> entityClass) {

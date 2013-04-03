@@ -1,5 +1,27 @@
 package hu.brg.implementor;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
+
 public abstract class RulePersistor {
-	public abstract void persist(String sql);
+	protected Connection conn = null;
+	
+	public void runStatement(String sql) throws Exception, SQLException {
+		if (conn != null) {
+			this.conn.createStatement().executeQuery(sql);
+		} else {
+			throw new Exception("Cannot execute query. No connection to the database is established");
+		}
+	}
+	
+	public abstract void connect(String connectString, String username, String password) throws SQLException;
+	
+	public void close() throws SQLException {
+		this.conn.close();
+	}
+
+	public boolean isClosed() throws SQLException {
+		return this.conn.isClosed();
+	}
 }
