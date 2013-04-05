@@ -1,14 +1,10 @@
-  -- Tuple Compare Rule :: ${column} ${operand} ${column2} ${table}
-    DECLARE
-        l_passed boolean := false;
+-- Attribute Range Rule :: ${column1} ${column2} ${operand}
     BEGIN
         IF l_oper IN ('INS', 'UPD')
         THEN
-            ${query}
-            
-            IF NOT l_passed
+            IF :new.${column1} ${operand} :new.${column2}
             THEN 
-                l_errors := l_errors || 'Violated query -> ${query}';
+                l_errors := l_errors || 'The value of ${column1} must be ${operand} than ${column2}';
             END IF;
         END IF;
     END;
