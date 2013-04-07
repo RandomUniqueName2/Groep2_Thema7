@@ -1,4 +1,4 @@
--- Attribute Other Rule :: ${query}
+-- Tuple Other Rule :: ${query}
     DECLARE
         l_passed boolean := false;
     BEGIN
