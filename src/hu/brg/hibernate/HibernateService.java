@@ -38,7 +38,7 @@ public class HibernateService {
 		Session session = sf.openSession();
 		
 		session.beginTransaction();
-		session.save(entity);
+		session.saveOrUpdate(entity);
 		
 		session.getTransaction().commit();
 		session.close();
@@ -51,7 +51,7 @@ public class HibernateService {
 		session.beginTransaction();
 		
 		for (Object entity : entityCollection) {
-			session.save(entity);
+			session.saveOrUpdate(entity);
 		}
 		
 		session.getTransaction().commit();
