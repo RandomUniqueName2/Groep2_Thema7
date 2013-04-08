@@ -1,34 +1,54 @@
 package hu.brg.implementor;
 
-import hu.brg.domain.businessrule.BRGBusinessRule;
+import hu.brg.common.iAuthGetter;
+import hu.brg.domain.DomainUtils;
+import hu.brg.domain.database.BRGDatabase;
+import hu.brg.domain.database.BRGSchema;
 import hu.brg.domain.database.BRGTable;
-import hu.brg.domain.mapping.BRGRuleToTable;
 import hu.brg.implementor.generator.TableGenerator;
 import hu.brg.implementor.generator.strategies.oracle.OracleRulePersistor;
 import hu.brg.implementor.generator.strategies.oracle.OracleTableGenerator;
 
-import java.sql.SQLException;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Properties;
 
 public class ImplementorService {
 	private ImplementorStrategy strategy;
 	
-	public final void implementBusinessRules(Collection<BRGBusinessRule> forRules, RulePersistor persistor) throws SQLException, Exception {
-		Set<BRGTable> tables = new HashSet<BRGTable>();
+	public final void implementBusinessRules(Collection<BRGDatabase> dbs, iAuthGetter author) throws Exception {
 		
-		for (BRGBusinessRule rule : forRules) {
-			for (BRGRuleToTable rtt : rule.getRuleToTables()) {
-				tables.add(rtt.getDatabaseTable());
+		
+		for (BRGDatabase db : dbs) {
+			this.strategy = Enum.valueOf(ImplementorStrategy.class, db.getDatabaseProvider().toUpperCase());
+			
+			RulePersistor persistor = getRulePersistor();
+			Properties props = new Properties();
+			
+			props.setProperty("title", "Connect to target database");
+			props.setProperty("connstring", db.getConnectionString());
+			
+			author.getAuth(props);
+			
+			if (author.hasAuthed()) {
+				persistor.connect(db.getConnectionString(), author.getUserName(), author.getPassword());
+				
+				if (persistor.isConnected()) {
+					for (BRGSchema schema : db.getSchemas()) {
+						for (BRGTable table : schema.getTables()) {
+							TableGenerator tableGenerator = getTableGenerator();
+							
+							if (DomainUtils.tableHasImplBusinessRules(table)) {
+								String generatedTableSQL = tableGenerator.generateRulesForTable(table);
+								System.out.println(generatedTableSQL);
+								persistor.runStatement(generatedTableSQL);
+							} else {
+								System.out.println(tableGenerator.getDropTableTriggerStmt(table));
+								//persistor.runStatement(tableGenerator.getDropTableTriggerStmt(table));
+							}
+						}
+					}
+				}
 			}
-		}
-		
-		TableGenerator generator = getTableGenerator();
-		
-		for (BRGTable table : tables) {			
-			String sqlCode = generator.generateRulesForTable(table);
-			persistor.runStatement(sqlCode);
 		}
 	}
 	
@@ -59,4 +79,5 @@ public class ImplementorService {
 		
 		return persistor;
 	}
+
 }

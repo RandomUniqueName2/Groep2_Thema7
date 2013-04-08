@@ -1,5 +1,6 @@
 package hu.brg.implementor.generator.strategies.oracle;
 
+import hu.brg.domain.DomainUtils;
 import hu.brg.domain.businessrule.BRGBusinessRule;
 import hu.brg.implementor.generator.RuleGenerator;
 
@@ -12,6 +13,9 @@ public class OracleRuleGenerator extends RuleGenerator {
 	public String generateACMPRule(BRGBusinessRule forRule) {
 		Map<String, String> data = new HashMap<String, String>();
 		
+		data.put("column1", DomainUtils.getFirstColumnFromBusinessRule(forRule).getName());
+		data.put("value", DomainUtils.getFirstValueFromBusinessRule(forRule).getValue());
+		data.put("operand", getOperandSQL(forRule.getOperator()));
 		
 		return fms.processTemplate("oracle/ACMPRule.ftl", data);
 	}
@@ -61,6 +65,17 @@ public class OracleRuleGenerator extends RuleGenerator {
 	@Override
 	public String generateMODIRule(BRGBusinessRule forRule) {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getOperandSQL(String operand) {
+		switch (operand) {
+			case "LT":
+				return "<";
+			case "EQ":
+				return "=";
+		}
 		return null;
 	}
 

@@ -12,4 +12,6 @@ public interface iRuleGenerator {
 	public String generateICMPRule(BRGBusinessRule forRule);
 	public String generateEOTHRule(BRGBusinessRule forRule);
 	public String generateMODIRule(BRGBusinessRule forRule);
+	
+	public String getOperandSQL(String operand);
 }

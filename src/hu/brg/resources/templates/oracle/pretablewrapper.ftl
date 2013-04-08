@@ -1,6 +1,6 @@
-CREATE OR REPLACE TRIGGER BRG_TRIGGER_${table.name}
+CREATE OR REPLACE TRIGGER BRG_TRG_${tableHash}
     BEFORE DELETE OR INSERT OR UPDATE
-    ON ${table.name}
+    ON ${tableName}
     FOR EACH ROW
 DECLARE
     l_oper   varchar2(3);

@@ -3,6 +3,7 @@ package hu.brg.hibernate;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -11,7 +12,7 @@ public class HibernateService {
 	private static final HibernateFactory hibernateFactory = new HibernateFactory();
 	
 	public void connect(String connString,
-			String username, String password) {
+			String username, String password) throws HibernateException {
 		Configuration config = hibernateFactory.getCurrentConfig();
 
 		config.setProperty("hibernate.connection.url", connString);

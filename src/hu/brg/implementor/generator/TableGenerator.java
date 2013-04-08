@@ -57,4 +57,5 @@ public abstract class TableGenerator implements iTableGenerator {
 	protected abstract iRuleGenerator getRuleGenerator();
 	protected abstract String getTablePreWrapper(BRGTable forTable);
 	protected abstract String getTablePostWrapper(BRGTable forTable);
+	public abstract String getDropTableTriggerStmt(BRGTable forTable);
 }

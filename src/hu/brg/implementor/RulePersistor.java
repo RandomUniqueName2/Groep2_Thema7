@@ -24,4 +24,16 @@ public abstract class RulePersistor {
 	public boolean isClosed() throws SQLException {
 		return this.conn.isClosed();
 	}
+	
+	public Boolean isConnected() {
+		if (conn != null) {
+			try {
+				return conn.isValid(3);
+			} catch (SQLException e) {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
 }

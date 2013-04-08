@@ -1,10 +1,14 @@
 package hu.brg.domain;
 
 import hu.brg.domain.businessrule.BRGBusinessRule;
+import hu.brg.domain.businessrule.BRGBusinessRuleValue;
+import hu.brg.domain.database.BRGColumn;
 import hu.brg.domain.database.BRGTable;
+import hu.brg.domain.mapping.BRGRuleToColumn;
 import hu.brg.domain.mapping.BRGRuleToTable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class DomainUtils {
@@ -28,4 +32,33 @@ public class DomainUtils {
 		
 		return sb.toString();
 	}
+	
+	public static BRGColumn getFirstColumnFromBusinessRule(BRGBusinessRule rule) {
+		Iterator<BRGRuleToColumn> columnIt = rule.getRuleToColumns().iterator();
+		if (columnIt.hasNext()) {
+			return columnIt.next().getDatabaseColumn();
+		}
+		
+		return null;
+	}
+	
+	public static BRGBusinessRuleValue getFirstValueFromBusinessRule(BRGBusinessRule rule) {
+		Iterator<BRGBusinessRuleValue> valueIt = rule.getValues().iterator();
+		if (valueIt.hasNext()) {
+			return valueIt.next();
+		}
+		
+		return null;
+	}
+	
+	public static Boolean tableHasImplBusinessRules(BRGTable table) {
+		for (BRGRuleToTable rtt: table.getRuleToTables()) {
+			if (rtt.getBusinessRule().isImplemented()) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }
+

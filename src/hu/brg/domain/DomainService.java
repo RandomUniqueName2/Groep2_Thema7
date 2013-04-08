@@ -73,7 +73,7 @@ public class DomainService {
 		hbnService.persistEntityCollection(rules);
 	}
 	
-	public void connectToRepository(String connectionString, String username, String password) {
+	public void connectToRepository(String connectionString, String username, String password) throws Exception {
 		hbnService.connect(connectionString, username, password);
 	}
 }

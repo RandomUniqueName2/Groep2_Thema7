@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -28,6 +29,7 @@ import javax.swing.table.TableRowSorter;
 @SuppressWarnings("serial")
 public class ImplementorMainFrame extends JFrame implements ActionListener {
 	private final DomainService ds = new DomainService();
+	@SuppressWarnings("unused")
 	private final ImplementorService is = new ImplementorService();
 
 	private JPanel contentPane;
@@ -60,6 +62,8 @@ public class ImplementorMainFrame extends JFrame implements ActionListener {
 		mnFile.add(mntmReloadBusinnesRules);
 		
 		JMenuItem mntmImplementRules = new JMenuItem("Implement Business Rules");
+		mntmImplementRules.setActionCommand("generate");
+		mntmImplementRules.addActionListener(this);
 		mntmImplementRules.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mnFile.add(mntmImplementRules);
 		
@@ -91,16 +95,42 @@ public class ImplementorMainFrame extends JFrame implements ActionListener {
 			this.dispose();
 			break;
 		case "connect":
-			new ConnectPopup(this);
+			connectToRepository();
+			loadBusinessRules();
 			break;
 		case "generate":
-			
+			this.saveBusinessRules();
+			try {
+				is.implementBusinessRules(ds.getAllDatabases(), new DBAuthGetter());
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Implementation of business rules failed\n" + e.getMessage(), "Implementation Error",	 JOptionPane.ERROR_MESSAGE, null);
+				e.printStackTrace();
+			}
 			break;
 		case "reload":
 			this.loadBusinessRules();
 			break;
 		default:
 			break;
+		}
+	}
+	
+	public void connectToRepository() {
+		DBConnectDialog connDialog = new DBConnectDialog();
+		
+		connDialog.setTitle("Connect to repository");
+		connDialog.showDialog();
+		
+		while (!connDialog.isClosed()) {
+			try {
+				//ds.connectToRepository(connDialog.getConnectString(), connDialog.getUsername(), connDialog.getPassword());
+				// TODO: Remove this debug connection!
+				ds.connectToRepository("jdbc:oracle:thin:@ondora01.hu.nl:8521/cursus01.hu.nl", "THO7_2012_2B_TEAM2", "THO7_2012_2B_TEAM2");
+				break;
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Failed to connect to repository\n" + e.getMessage(), "Connection Error",	 JOptionPane.ERROR_MESSAGE, null);
+				connDialog.showDialog();
+			}
 		}
 	}
 	
@@ -116,8 +146,12 @@ public class ImplementorMainFrame extends JFrame implements ActionListener {
 	}
 	
 	public void loadBusinessRules() {
-		List<BRGBusinessRule> allRules = ds.getAllBusinessRules();
-		this.setTableData(allRules);
+		try {
+			List<BRGBusinessRule> allRules = ds.getAllBusinessRules();
+			this.setTableData(allRules);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Failed to retrieve business rules.\n" + e.getMessage(), "Connection Error",	 JOptionPane.ERROR_MESSAGE, null);
+		}
 	}
 	
 	public void saveBusinessRules() {

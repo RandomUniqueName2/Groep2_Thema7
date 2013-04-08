@@ -20,6 +20,7 @@ public class OracleTableGenerator extends TableGenerator {
 	protected String getTablePreWrapper(BRGTable forTable) {
 		Map<String, String> data = new HashMap<String, String>();
 		
+		data.put("tableHash", Math.abs(forTable.getName().hashCode()) + "");
 		data.put("tableName", forTable.getName());
 		
 		return fms.processTemplate("oracle/pretablewrapper.ftl", data);
@@ -28,5 +29,10 @@ public class OracleTableGenerator extends TableGenerator {
 	@Override
 	protected String getTablePostWrapper(BRGTable forTable) {
 		return fms.processTemplate("oracle/posttablewrapper.ftl", null);
+	}
+
+	@Override
+	public String getDropTableTriggerStmt(BRGTable forTable) {
+		return "DROP TRIGGER BRG_TRG_" + Math.abs(forTable.getName().hashCode()) + ";";
 	}
 }
