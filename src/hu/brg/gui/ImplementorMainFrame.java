@@ -2,7 +2,6 @@ package hu.brg.gui;
 
 import hu.brg.domain.DomainService;
 import hu.brg.domain.businessrule.BRGBusinessRule;
-import hu.brg.domain.mapping.BRGRuleToTable;
 import hu.brg.implementor.ImplementorService;
 
 import java.awt.BorderLayout;
@@ -11,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -24,7 +22,6 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -90,6 +87,7 @@ public class ImplementorMainFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent aEvent) {
 		switch(aEvent.getActionCommand()) {
 		case "exit": 
+			this.saveBusinessRules();
 			this.dispose();
 			break;
 		case "connect":
@@ -106,38 +104,8 @@ public class ImplementorMainFrame extends JFrame implements ActionListener {
 		}
 	}
 	
-	public void setTableData(Collection<BRGBusinessRule> businessRules) {
-		Object[][] modelData = new Object[businessRules.size()][4];
-		
-		int i = 0;
-		for (BRGBusinessRule rule : businessRules) {
-			StringBuilder SBTables = new StringBuilder();
-			
-			for (BRGRuleToTable t : rule.getRuleToTables()) {
-				SBTables.append(t.getDatabaseTable().getName() + " ");
-			}
-			
-			modelData[i][0] = rule.isImplemented() != null ? rule.isImplemented() : false;
-			modelData[i][1] = rule.getName();
-			modelData[i][2] = rule.getBusinessRuleType().getName();
-			modelData[i][3] = SBTables.toString();
-			i++;
-		}
-		TableModel model = new DefaultTableModel(
-				modelData,
-				new String[] {
-					"Implemented", "Name", "Type", "Table(s)"
-				}
-			) {
-				@SuppressWarnings("rawtypes")
-				Class[] columnTypes = new Class[] {
-					Boolean.class, String.class, String.class, String.class
-				};
-				@SuppressWarnings({ "unchecked", "rawtypes" })
-				public Class getColumnClass(int columnIndex) {
-					return columnTypes[columnIndex];
-				}
-			};
+	public void setTableData(List<BRGBusinessRule> businessRules) {
+		BusinessRuleTableModel model = new BusinessRuleTableModel(businessRules);
 			
 		table.setModel(model);
 		
@@ -150,5 +118,12 @@ public class ImplementorMainFrame extends JFrame implements ActionListener {
 	public void loadBusinessRules() {
 		List<BRGBusinessRule> allRules = ds.getAllBusinessRules();
 		this.setTableData(allRules);
+	}
+	
+	public void saveBusinessRules() {
+		TableModel model = table.getModel();
+		List<BRGBusinessRule> allRules = ((BusinessRuleTableModel) model).getData();
+		
+		ds.persistBusinessRules(allRules);
 	}
 }

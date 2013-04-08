@@ -69,6 +69,10 @@ public class DomainService {
 		hbnService.persistEntityCollection(this.allBusinessRules);
 	}
 	
+	public void persistBusinessRules(Collection<BRGBusinessRule> rules) {
+		hbnService.persistEntityCollection(rules);
+	}
+	
 	public void connectToRepository(String connectionString, String username, String password) {
 		hbnService.connect(connectionString, username, password);
 	}
