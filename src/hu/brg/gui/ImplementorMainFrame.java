@@ -113,19 +113,20 @@ public class ImplementorMainFrame extends JFrame implements ActionListener {
 			StringBuilder SBTables = new StringBuilder();
 			
 			for (BRGRuleToTable t : rule.getRuleToTables()) {
-				SBTables.append(t.getBusinessRule().getName() + " ");
+				SBTables.append(t.getDatabaseTable().getName() + " ");
 			}
 			
 			modelData[i][0] = rule.isImplemented() != null ? rule.isImplemented() : false;
 			modelData[i][1] = rule.getName();
 			modelData[i][2] = rule.getBusinessRuleType().getName();
 			modelData[i][3] = SBTables.toString();
+			i++;
 		}
 		
 		table.setModel(new DefaultTableModel(
 			modelData,
 			new String[] {
-				"", "Name", "Type", "Table(s)"
+				"Implemented", "Name", "Type", "Table(s)"
 			}
 		) {
 			@SuppressWarnings("rawtypes")
