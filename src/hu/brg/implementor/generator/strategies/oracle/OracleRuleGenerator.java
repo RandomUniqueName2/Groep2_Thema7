@@ -73,8 +73,20 @@ public class OracleRuleGenerator extends RuleGenerator {
 		switch (operand) {
 			case "LT":
 				return "<";
+			case "LTE":
+				return "<=";
+			case "GT":
+				return ">";
+			case "GTE":
+				return ">=";
 			case "EQ":
 				return "=";
+			case "NEQ":
+				return "!=";
+			case "IN":
+				return "BETWEEN";
+			case "NOTIN":
+				return "NOT BETWEEN";
 		}
 		return null;
 	}
