@@ -11,7 +11,7 @@ public class BusinessRuleImplementor {
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				try {
+				try {					
 					ImplementorMainFrame frame = new ImplementorMainFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {

@@ -5,11 +5,14 @@ import hu.brg.domain.businessrule.BRGBusinessRule;
 import hu.brg.domain.mapping.BRGRuleToTable;
 import hu.brg.implementor.ImplementorService;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -19,8 +22,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 @SuppressWarnings("serial")
 public class ImplementorMainFrame extends JFrame implements ActionListener {
@@ -36,9 +42,11 @@ public class ImplementorMainFrame extends JFrame implements ActionListener {
 		setTitle("Business Rule Implementor");
 		
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBackground(UIManager.getColor("MenuBar.background"));
 		setJMenuBar(menuBar);
 		
 		JMenu mnFile = new JMenu("File");
+		mnFile.setBackground(UIManager.getColor("Menu.background"));
 		menuBar.add(mnFile);
 		
 		JMenuItem mntmConnect = new JMenuItem("Connect to Repository");
@@ -47,6 +55,12 @@ public class ImplementorMainFrame extends JFrame implements ActionListener {
 		mntmConnect.addActionListener(this);
 		mntmConnect.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mnFile.add(mntmConnect);
+		
+		JMenuItem mntmReloadBusinnesRules = new JMenuItem("Reload Businnes Rules");
+		mntmReloadBusinnesRules.setActionCommand("reload");
+		mntmReloadBusinnesRules.addActionListener(this);
+		mntmReloadBusinnesRules.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+		mnFile.add(mntmReloadBusinnesRules);
 		
 		JMenuItem mntmImplementRules = new JMenuItem("Implement Business Rules");
 		mntmImplementRules.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
@@ -60,31 +74,15 @@ public class ImplementorMainFrame extends JFrame implements ActionListener {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 			
 		table = new JTable();
 		table.setFillsViewportHeight(true);
-		table.setModel(new DefaultTableModel(
-			new Object[][] {},
-			new String[] {
-				"", "Name", "Type", "Table(s)"
-			}
-		) {
-			@SuppressWarnings("rawtypes")
-			Class[] columnTypes = new Class[] {
-				Boolean.class, String.class, String.class, String.class
-			};
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
 		
-		table.getColumnModel().getColumn(0).setPreferredWidth(30);
-		table.getColumnModel().getColumn(0).setMaxWidth(30);
+		this.setTableData(new ArrayList<BRGBusinessRule>());
+		
+		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(0, 0, 784, 540);
 		contentPane.add(scrollPane);
 	}
 	
@@ -99,6 +97,9 @@ public class ImplementorMainFrame extends JFrame implements ActionListener {
 			break;
 		case "generate":
 			
+			break;
+		case "reload":
+			this.loadBusinessRules();
 			break;
 		default:
 			break;
@@ -122,21 +123,32 @@ public class ImplementorMainFrame extends JFrame implements ActionListener {
 			modelData[i][3] = SBTables.toString();
 			i++;
 		}
-		
-		table.setModel(new DefaultTableModel(
-			modelData,
-			new String[] {
-				"Implemented", "Name", "Type", "Table(s)"
-			}
-		) {
-			@SuppressWarnings("rawtypes")
-			Class[] columnTypes = new Class[] {
-				Boolean.class, String.class, String.class, String.class
+		TableModel model = new DefaultTableModel(
+				modelData,
+				new String[] {
+					"Implemented", "Name", "Type", "Table(s)"
+				}
+			) {
+				@SuppressWarnings("rawtypes")
+				Class[] columnTypes = new Class[] {
+					Boolean.class, String.class, String.class, String.class
+				};
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
 			};
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+			
+		table.setModel(model);
+		
+		table.setRowSorter(new TableRowSorter<TableModel>(model));
+		
+		table.getColumnModel().getColumn(0).setPreferredWidth(30);
+		table.getColumnModel().getColumn(0).setMaxWidth(30);
+	}
+	
+	public void loadBusinessRules() {
+		List<BRGBusinessRule> allRules = ds.getAllBusinessRules();
+		this.setTableData(allRules);
 	}
 }

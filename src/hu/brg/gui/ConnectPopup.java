@@ -80,13 +80,21 @@ public class ConnectPopup extends JDialog implements ActionListener {
 		if (anEvent.getActionCommand() == "ok") {
 			try {
 				DomainService ds = new DomainService();
-				ds.connectToRepository(this.connectStringField.getText(), 
-						this.usernameField.getText(), 
-						new String(this.passwordField.getPassword())
+				
+				
+//				ds.connectToRepository(this.connectStringField.getText(), 
+//						this.usernameField.getText(), 
+//						new String(this.passwordField.getPassword())
+//				);
+				
+				// DEBUG QUICK CONNECT
+				ds.connectToRepository("jdbc:oracle:thin:@ondora01.hu.nl:8521/cursus01.hu.nl", 
+						"THO7_2012_2B_TEAM2", 
+						"THO7_2012_2B_TEAM2"
 				);
 				
 				if (imf != null) {
-					imf.setTableData(ds.getAllBusinessRules());
+					imf.loadBusinessRules();
 				}
 				
 				this.dispose();
