@@ -25,7 +25,7 @@ public class DBAuthGetter extends AbstractAuthGetter {
 		
 		if (!connDialog.isClosed()) {
 			this.password = connDialog.getPassword();
-			this.userName = connDialog.getUsername();
+			this.username = connDialog.getUsername();
 			this.authed = true;
 			connDialog.close();
 		}

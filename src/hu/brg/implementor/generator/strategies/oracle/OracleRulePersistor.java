@@ -12,7 +12,7 @@ public class OracleRulePersistor extends RulePersistor {
 	public void connect(String connectString, String username, String password)
 			throws SQLException {
 		OracleDataSource ds = new OracleDataSource();
-		ds.setURL(connectString);
+		ds.setURL("jdbc:oracle:thin:@" + connectString);
 		ds.setUser(username);
 		ds.setPassword(password);
 		

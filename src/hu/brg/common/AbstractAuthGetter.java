@@ -1,13 +1,13 @@
 package hu.brg.common;
 
 public abstract class AbstractAuthGetter implements iAuthGetter {
-	protected String userName;
+	protected String username;
 	protected String password;
 	protected Boolean authed;
 
 	@Override
 	public String getUserName() {	
-		return userName;
+		return username;
 	}
 
 	@Override
