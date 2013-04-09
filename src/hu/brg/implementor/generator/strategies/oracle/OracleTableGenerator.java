@@ -18,7 +18,7 @@ public class OracleTableGenerator extends TableGenerator {
 
 	@Override
 	protected String getTablePreWrapper(BRGTable forTable) {
-		Map<String, String> data = new HashMap<String, String>();
+		Map<String, Object> data = new HashMap<String, Object>();
 		
 		data.put("tableHash", Math.abs(forTable.getName().hashCode()) + "");
 		data.put("tableName", forTable.getName());

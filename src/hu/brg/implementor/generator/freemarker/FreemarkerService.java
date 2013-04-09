@@ -21,7 +21,7 @@ public final class FreemarkerService {
 		}
 	}
 	
-	public final String processTemplate(String tplName, Map<String, String> data) {
+	public final String processTemplate(String tplName, Map<String, Object> data) {
 		StringWriter sw = new StringWriter();
 		
 		try {

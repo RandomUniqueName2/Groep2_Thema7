@@ -11,7 +11,7 @@ public class OracleRuleGenerator extends RuleGenerator {
 
 	@Override
 	public String generateACMPRule(BRGBusinessRule forRule) {
-		Map<String, String> data = new HashMap<String, String>();
+		Map<String, Object> data = new HashMap<String, Object>();
 		
 		data.put("column1", DomainUtils.getFirstColumnFromBusinessRule(forRule).getName());
 		data.put("value", DomainUtils.getFirstValueFromBusinessRule(forRule).getValue());
@@ -22,50 +22,68 @@ public class OracleRuleGenerator extends RuleGenerator {
 
 	@Override
 	public String generateARNGRule(BRGBusinessRule forRule) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("column", null);
+		data.put("operand", null);
+		data.put("minvalue", null);
+		data.put("maxvalue", null);
+		
+		return fms.processTemplate("oracle/ARNGRule.ftl", data);
 	}
 
 	@Override
 	public String generateALISRule(BRGBusinessRule forRule) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("colum", null);
+		data.put("values", null);
+		
+		return fms.processTemplate("oracle/ALISRule.ftl", data);
 	}
 
 	@Override
 	public String generateAOTHRule(BRGBusinessRule forRule) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("query", null);
+		
+		return fms.processTemplate("oracle/AOTHRule.ftl", data);
 	}
 
 	@Override
 	public String generateTCMPRule(BRGBusinessRule forRule) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> data = new HashMap<String, Object>();
+		
+		return fms.processTemplate("oracle/TCMPRule.ftl", data);
 	}
 
 	@Override
 	public String generateTOTHRule(BRGBusinessRule forRule) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> data = new HashMap<String, Object>();
+		
+		return fms.processTemplate("oracle/TOTHRule.ftl", data);
 	}
 
 	@Override
 	public String generateICMPRule(BRGBusinessRule forRule) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> data = new HashMap<String, Object>();
+		
+		return fms.processTemplate("oracle/ICMPRule.ftl", data);
 	}
 
 	@Override
 	public String generateEOTHRule(BRGBusinessRule forRule) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> data = new HashMap<String, Object>();
+		
+		return fms.processTemplate("oracle/EOTHRule.ftl", data);
 	}
 
 	@Override
 	public String generateMODIRule(BRGBusinessRule forRule) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> data = new HashMap<String, Object>();
+		
+		return fms.processTemplate("oracle/MODIRule.ftl", data);
 	}
 
 	@Override

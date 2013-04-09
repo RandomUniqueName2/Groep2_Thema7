@@ -29,7 +29,6 @@ import javax.swing.table.TableRowSorter;
 @SuppressWarnings("serial")
 public class ImplementorMainFrame extends JFrame implements ActionListener {
 	private final DomainService ds = new DomainService();
-	@SuppressWarnings("unused")
 	private final ImplementorService is = new ImplementorService();
 
 	private JPanel contentPane;
