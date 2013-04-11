@@ -1,6 +1,6 @@
 package hu.brg.implementor.generator;
 
-import hu.brg.implementor.generator.freemarker.FreemarkerService;
+import hu.brg.implementor.freemarker.FreemarkerService;
 
 
 public abstract class RuleGenerator implements iRuleGenerator {

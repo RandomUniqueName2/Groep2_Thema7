@@ -1,6 +1,6 @@
 package hu.brg.implementor.generator.strategies.oracle;
 
-import hu.brg.implementor.RulePersistor;
+import hu.brg.implementor.generator.RulePersistor;
 
 import java.sql.SQLException;
 

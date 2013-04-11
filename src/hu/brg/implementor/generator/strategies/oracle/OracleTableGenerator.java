@@ -1,9 +1,9 @@
 package hu.brg.implementor.generator.strategies.oracle;
 
 import hu.brg.domain.database.BRGTable;
+import hu.brg.implementor.freemarker.FreemarkerService;
 import hu.brg.implementor.generator.TableGenerator;
 import hu.brg.implementor.generator.iRuleGenerator;
-import hu.brg.implementor.generator.freemarker.FreemarkerService;
 
 import java.util.HashMap;
 import java.util.Map;

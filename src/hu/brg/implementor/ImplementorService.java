@@ -6,6 +6,7 @@ import hu.brg.domain.database.BRGDatabase;
 import hu.brg.domain.database.BRGSchema;
 import hu.brg.domain.database.BRGTable;
 import hu.brg.implementor.generator.TableGenerator;
+import hu.brg.implementor.generator.iRulePersistor;
 import hu.brg.implementor.generator.strategies.oracle.OracleRulePersistor;
 import hu.brg.implementor.generator.strategies.oracle.OracleTableGenerator;
 
@@ -21,7 +22,7 @@ public class ImplementorService {
 		for (BRGDatabase db : dbs) {
 			this.strategy = Enum.valueOf(ImplementorStrategy.class, db.getDatabaseProvider().toUpperCase());
 			
-			RulePersistor persistor = getRulePersistor();
+			iRulePersistor persistor = getRulePersistor();
 			Properties props = new Properties();
 			
 			props.setProperty("title", "Connect to target database");
@@ -48,6 +49,8 @@ public class ImplementorService {
 						}
 					}
 				}
+				
+				persistor.close();
 			}
 		}
 	}
@@ -66,8 +69,8 @@ public class ImplementorService {
 		return generator;
 	}
 	
-	public final RulePersistor getRulePersistor() {
-		RulePersistor persistor = null;
+	public final iRulePersistor getRulePersistor() {
+		iRulePersistor persistor = null;
 		
 		switch (strategy) {
 		case ORACLE:

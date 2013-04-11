@@ -1,4 +1,4 @@
-package hu.brg.implementor.generator.freemarker;
+package hu.brg.implementor.freemarker;
 
 import java.io.File;
 import java.io.IOException;
